@@ -24,9 +24,22 @@ r = pcf8563.PCF8563(i2c)
 
 if first_run:
     import uploadtime
-    r.write_all(seconds=uploadtime.seconds, minutes=uploadtime.minutes, hours=uploadtime.hours, day=uploadtime.day, date=uploadtime.date, month=uploadtime.month, year=uploadtime.year)
+    r.write_all(seconds=uploadtime.seconds, minutes=uploadtime.minutes, hours=uploadtime.hours, day=uploadtime.day_of_week, date=uploadtime.date, month=uploadtime.month, year=uploadtime.year)
     os.remove(uploadtimeFile)
     print("updated the RTC time.")
+
+if r.check_low_voltage() != 0:
+    while True:
+        buzzer(1)
+        sleep(5)
+        buzzer(0)
+        sleep(1)
+        for i in range(3):
+            buzzer(1)
+            sleep(0.1)
+            buzzer(0)
+            sleep(0.1)
+        sleep(1)
 
 year, month, day, date, hour, minute, second = r.datetime()
 print("rtc time is (UTC)")

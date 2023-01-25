@@ -281,3 +281,6 @@ class PCF8563:
                 raise ValueError('weekday is out of range [0,6].')
             self.__write_byte(PCF8563_ALARM_WEEKDAY, self.__dec2bcd(
                 weekday) & 0x7f)
+    
+    def check_low_voltage(self):
+        return self.__read_byte(PCF8563_SEC_REG) & PCF8563_VOL_LOW_MASK
