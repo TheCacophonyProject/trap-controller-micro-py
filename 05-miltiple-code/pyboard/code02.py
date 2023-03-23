@@ -59,7 +59,9 @@ def reset_spools():
     reset_spool(s2)
     print("Finished resetting spool, waiting 1 second.")
     sleep(1)
-  
+
+trigger_spools()
+sleep(4)
 reset_spools()
 
 for i in range(5):

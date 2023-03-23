@@ -10,7 +10,7 @@ It is given one directory as an argument.
 
 In that directory there should be a `pyboard` folder. The contents of that folder will be uploaded to the device.
 
-That directory can aslo include a `pre-scripts.py` file. This will get run before uploading the contents of `pyboard`.
+That directory can also include a `pre-scripts.py` file. This will get run before uploading the contents of `pyboard`.
 
 After the code has been uploaded it will connect to the board and run `main.py`.
 

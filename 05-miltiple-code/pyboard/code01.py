@@ -88,7 +88,9 @@ def is_night():
     sr = timezone.get_sunrise(utc, latitude, longitude, tz)
     ss = timezone.get_sunset(utc, latitude, longitude, tz)
     return now.time() < sr or ss < now.time() or not day_trigger.value()
-    
+
+trigger_spools()
+sleep(4)
 reset_spools()
 
 now = get_now()
