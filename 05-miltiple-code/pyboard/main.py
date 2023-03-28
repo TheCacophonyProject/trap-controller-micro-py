@@ -41,7 +41,7 @@ if r.check_low_voltage() != 0:
             sleep(0.1)
         sleep(1)
 
-year, month, day, date, hour, minute, second = r.datetime()
+year, month, date, day, hour, minute, second = r.datetime()
 print("rtc time is (UTC)")
 print(datetime.datetime(year = year+2000, month = month, day = date, hour = hour, minute = minute, second = second))
 
