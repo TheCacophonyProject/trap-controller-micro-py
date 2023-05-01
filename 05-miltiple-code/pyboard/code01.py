@@ -79,7 +79,7 @@ def reset_spools():
     sleep(1)
     
 def get_now():
-    year, month, day, date, hour, minute, second = r.datetime()
+    year, month, date, day, hour, minute, second = r.datetime()
     return datetime.datetime(year = year+2000, month = month, day = date, hour = hour, minute = minute, second = second)    
 
 def is_night():
