@@ -2,78 +2,22 @@
 import time
 from time import sleep
 from machine import Pin, PWM
+from config import servo_home, servo_reset, servo_trigger
+from util import Trap, Buzzer
 
 trigger = Pin(6)
+trap = Trap()
+buzzer = Buzzer()
 
-servo_home = 2150*1000
-servo_reset = 500*1000
-servo_trigger = 2450*1000
-
-spool_power = Pin(13, Pin.OUT)
-spool_power.low()
-
-s1 = PWM(Pin(15))
-s1.freq(50)
-s2 = PWM(Pin(14))
-s2.freq(50)
-
-buzzer = Pin(5, Pin.OUT)
-buzzer.low()
-
-def trigger_spools():
-    print("Trigger spools")
-    spool_power.high()
-    s1.duty_ns(servo_trigger)
-    s2.duty_ns(servo_trigger)
-    sleep(1)
-    s1.duty_ns(servo_home)
-    s2.duty_ns(servo_home)
-    sleep(1)
-    spool_power.low()
-
-def reset_spool(spool):
-    spool_power.high()
-    sleep(0.1)
-    print("Reset")
-    n = 5
-    for i in range(n):
-        angle = int(servo_home+(servo_reset-servo_home)*(i+1)/n)
-        print(angle)
-        spool.duty_ns(angle)
-        sleep(1)
-        spool.duty_ns(servo_home)
-        sleep(1)
-    
-        
-    spool.duty_ns(servo_reset)
-    sleep(2.5)
-    print("Home")
-    spool.duty_ns(servo_home)
-    sleep(2)
-    spool_power.low()
-        
-def reset_spools():
-    print("Reset spool 1")
-    reset_spool(s1)
-    print("Reset spool 2")
-    reset_spool(s2)
-    print("Finished resetting spool, waiting 1 second.")
-    sleep(1)
-
-trigger_spools()
+trap.trigger_spools()
 sleep(4)
-reset_spools()
-
-for i in range(5):
-    sleep(0.5)
-    buzzer.high()
-    sleep(0.5)
-    buzzer.low()
+trap.reset_spools()
+buzzer.beep_trap_ready()
 
 while True:        
     if (trigger.value()):
         print("triggered")
-        trigger_spools()
+        trap.trigger_spools()
         sleep(60*10)
-        reset_spools()
+        trap.reset_spools()
     sleep(0.1)
