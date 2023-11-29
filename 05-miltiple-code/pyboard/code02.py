@@ -2,7 +2,6 @@
 import time
 from time import sleep
 from machine import Pin, PWM
-from config import servo_home, servo_reset, servo_trigger
 from util import Trap, Buzzer
 
 trigger = Pin(6)

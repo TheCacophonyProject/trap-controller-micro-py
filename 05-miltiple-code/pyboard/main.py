@@ -4,6 +4,7 @@ import pcf8563
 import os
 import datetime
 from util import Buzzer, Clock
+from config import *
 
 buzzer = Buzzer()
 clock = Clock()
@@ -28,11 +29,9 @@ if first_run:
     print("updated the RTC time.")
 
 if clock.check_low_voltage() != 0:
-    buzzer.beep_error(error_time_not_set, loop=true)
+    buzzer.beep_error(ERROR_TIME_NOT_SET, loop=true)
 
-clock.
-
-year, month, date, day, hour, minute, second = r.datetime()
+#year, month, date, day, hour, minute, second = r.datetime()
 print("RTC time is (UTC): " + str(clock.get_utc_time()))
 print("Local time is :    " + str(clock.get_local_time()))
 
@@ -53,10 +52,10 @@ for i in range(n):
     sleep(0.2)
 sleep(1)
 for i in range(3):
-    buzzer(1)
-    sleep.on()
-    buzzer(0)
-    sleep.off()
+    buzzer.on()
+    sleep(0.1)
+    buzzer.off()
+    sleep(0.1)
 sleep(1)
 
 filename = "/code{:02d}.py".format(n)
@@ -66,4 +65,4 @@ try:
         exec(f.read())
 except OSError:
     print(filename + " does not exist!")
-    beep_error(error_no_program_found, loop=true)
+    buzzer.beep_error(ERROR_NO_PROGRAM_FOUND, loop=True)
