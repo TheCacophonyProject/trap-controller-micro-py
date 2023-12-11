@@ -29,7 +29,7 @@ if first_run:
     print("updated the RTC time.")
 
 if clock.check_low_voltage() != 0:
-    buzzer.beep_error(ERROR_TIME_NOT_SET, loop=true)
+    buzzer.beep_error(ERROR_TIME_NOT_SET, loop=True)
 
 #year, month, date, day, hour, minute, second = r.datetime()
 print("RTC time is (UTC): " + str(clock.get_utc_time()))
