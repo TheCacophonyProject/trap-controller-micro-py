@@ -48,7 +48,7 @@ class Clock():
         dst = timezone.time_change_rule(-1, 6, 9, 2, 780)
         st = timezone.time_change_rule(0, 6, 4, 2, 720)        
         self.nz_tz = timezone.timezone(dst, st)
-        self.always_on = Pin(PIN_24_7, Pin.IN, Pin.PULL_UP)
+        self.night_only = Pin(PIN_24_7, Pin.IN, Pin.PULL_UP)
 
     def get_local_time(self, utc_time=None):
         if utc_time is None:
@@ -66,12 +66,12 @@ class Clock():
         utc = self.get_utc_time()
         local_time = self.get_local_time(utc)
         tz = self.nz_tz.get_current_tz(utc).timezone
-        sunrise = timezone.get_sunrise(utc, latitude, longitude, tz)
-        sunset = timezone.get_sunset(utc, latitude, longitude, tz)
+        sunrise = timezone.get_sunrise(utc, LATITUDE, LONGITUDE, tz)
+        sunset = timezone.get_sunset(utc, LATITUDE, LONGITUDE, tz)
         return local_time.time() < sunrise or sunset < local_time.time()
 
     def in_active_window(self):
-        return self.always_on.value() or self.is_night()
+        return (not self.night_only.value()) or self.is_night()
 
     def check_low_voltage(self):
         return self.r.check_low_voltage()
