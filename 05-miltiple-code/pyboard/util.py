@@ -7,14 +7,18 @@ from time import sleep
 
 class Buzzer():
     def __init__(self):
-        self.buzzer = Pin(5, Pin.OUT)
+        self.pwm_instance = PWM(Pin(5))
         self.off()
 
     def on(self):
-        self.buzzer.high()
+        self.pwm(100, 100)
 
     def off(self):
-        self.buzzer.low()
+        self.pwm(100, 0)
+
+    def pwm(self, freq, duty):
+        self.pwm_instance.freq(freq)
+        self.pwm_instance.duty_u16(int(duty * 65535 / 100))
 
     def beep_trap_ready(self):
         for i in range(5):
